@@ -1,0 +1,126 @@
+[tool.poetry]
+name = "{{cookiecutter.project_name}}"
+version = "{{cookiecutter.project_version}}"
+description = "{{cookiecutter.project_description}}"
+authors = ["{{cookiecutter.author_name}} <{{cookiecutter.author_email}}>"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "{{cookiecutter.project_repo}}"
+keywords = []
+packages = [{ include = "{{cookiecutter.package_namespace}}" }]
+exclude = ["{{cookiecutter.package_namespace}}/**/*_test.py"]
+
+
+# [[tool.poetry.source]]
+# name = "source-name"
+# url = "url/to/source"
+# priority = "default"
+
+[tool.poetry.dependencies]
+python = "{{cookiecutter.supported_python_version}}"
+
+
+[tool.poetry.group.dev.dependencies]
+black = { version = "*", allow-prereleases = true }
+flake8 = ">=5"
+flake8-isort = "*"
+flake8-pyproject = "*"
+flake8-docstrings = "*"
+ipython = "*"
+isort = "5.*"
+pylint = "2.13.*"
+pyright = "*"
+pytest = "7.*"
+pytest-cov = "*"
+pytest-env = "*"
+pytest-mock = "*"
+pytest-ordering = "*"
+pytest-sugar = "*"
+ipykernel = "*"
+jupyter = "*"
+
+[tool.poetry.extras]
+
+[tool.poetry.scripts]
+# poetry = "poetry.console:main"
+
+[build-system]
+requires = ["poetry_core>=1.0.0", "pip>=20.3.3"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+multi_line_output = 3
+skip_glob = "env"
+known_first_party = "{{cookiecutter.package_namespace}}"
+known_third_party = []
+
+[tool.black]
+target-version = ["py310", "py311"]
+exclude = '''
+(
+    asv_bench/env
+    | /.egg
+    | /.git
+    | /.hg
+    | /.mypy_cache
+    | /.nox
+    | /.tox
+    | /.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | setup.py
+)
+'''
+
+[tool.pyright]
+include = ["{{cookiecutter.package_namespace}}"]
+exclude = ["**/node_modules", "**/__pycache__", "**/*_test.py", "tests"]
+venvPath = ".venv"
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+[tool.flake8]
+ignore = [
+    "E252", # allow type-hinting assignation kw: hint=VALUE
+]
+max-line-length = 100
+max-complexity = 10
+select = ["B", "C", "E", "F", "W", "T4", "B9"]
+import-order-style = "google"
+docstring-convention = "google"
+exclude = [".tox", ".git", ".venv", "docs", "tests"]
+per-file-ignores = [
+    "__init__.py: F401"
+]
+
+[tool.pytest]
+norecursedirs = [
+    ".git",
+    ".tox",
+    "docs",
+    "*/docs/*",
+    "env",
+    ".venv",
+    "tmp*",
+    "assets"
+]
+python_files = ["tests.py", "test_*.py", "*_test.py", "*_tests.py"]
+python_functions = "test_*"
+python_classes = "Test*"
+
+[tool.coverage.run]
+source = ["{{cookiecutter.package_namespace}}"]
+omit = ["*tests*", "*migrations*", "**/*_teset.py"]
+data_file = ".coverage-reports/.coverage"
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 60
+
+[tool.coverage.html]
+directory = ".coverage-reports/html"

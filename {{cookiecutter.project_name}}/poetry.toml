@@ -1,0 +1,6 @@
+[installer]
+parallel = true
+
+[virtualenvs]
+in-project = true
+prefer-active-python = true

@@ -1,0 +1,11 @@
+{
+    "supported_python_version": ">=3.10,<3.12",
+    "python_version": "3.11.7",
+    "author_name": "author name",
+    "author_email": "author@email.com",
+    "package_namespace": "package_namespace",
+    "project_name": "project-name",
+    "project_version": "0.0.1",
+    "project_description": "A project generated with cookiecutter",
+    "project_repo": "https://github.com/username/repo"
+}
